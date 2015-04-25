@@ -1,6 +1,7 @@
 package Mojolicious::Plugin::ReplyTable;
 
 use Mojo::Base 'Mojolicious::Plugin';
+use Mojo::Util;
 
 sub register {
   my ($plugin, $app, $config) = @_;
@@ -17,6 +18,7 @@ sub _reply_table {
     json => { json => $data },
     html => { template => 'reply_table', table => $data },
     csv  => sub { $_[0]->render(text => _to_csv($data)) },
+    txt  => sub { $_[0]->render(text => Mojo::Util::tablify($data)) },
     xls  => sub { $_[0]->render(data => _to_xls($data)) },
     xlsx => sub { $_[0]->render(data => _to_xlsx($data)) },
     @_

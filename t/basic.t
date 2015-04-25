@@ -53,5 +53,18 @@ $t->get_ok('/table_header.html')
   is_deeply $body, [@$data[1..$#$data]], 'correct html table body';
 }
 
+$t->get_ok('/table.txt')
+  ->status_is(200)
+  ->content_type_like(qr'text/plain');
+
+{
+  my $res = $t->tx->res->body;
+  my $pattern = '';
+  for my $line (@$data) {
+    $pattern .= '\s*' . join('\s+', map { quotemeta Mojo::Util::encode 'UTF-8', $_ } @$line) . '\s*\v\s*';
+  }
+  like $res, qr[$pattern]su, 'text table contains correct information';
+}
+
 done_testing;
 
