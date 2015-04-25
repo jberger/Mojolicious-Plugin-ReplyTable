@@ -19,12 +19,12 @@ my $t = Test::Mojo->new;
 
 $t->get_ok('/table.json')
   ->status_is(200)
-  ->content_type_is('application/json')
+  ->content_type_like(qr'application/json')
   ->json_is($data);
 
 $t->get_ok('/table.csv')
   ->status_is(200)
-  ->content_type_is('text/csv');
+  ->content_type_like(qr'text/csv');
 
 {
   my $csv = Text::CSV->new({binary => 1});
@@ -34,7 +34,8 @@ $t->get_ok('/table.csv')
 }
 
 $t->get_ok('/table.html')
-  ->status_is(200);
+  ->status_is(200)
+  ->content_type_like(qr'text/html');
 
 {
   my $res = $t->tx->res->dom->find('tbody tr')->map(sub{ $_->find('td')->map('text')->to_array })->to_array;
@@ -42,13 +43,14 @@ $t->get_ok('/table.html')
 }
 
 $t->get_ok('/table_header.html')
-  ->status_is(200);
+  ->status_is(200)
+  ->content_type_like(qr'text/html');
 
 {
-  my $res = $t->tx->res->dom->find('thead tr th')->map('text')->to_array;
-  is_deeply $res, $data->[0], 'correct html table headers';
-  my $res = $t->tx->res->dom->find('tbody tr')->map(sub{ $_->find('td')->map('text')->to_array })->to_array;
-  is_deeply $res, [@$data[1..$#$data]], 'correct html table body';
+  my $head = $t->tx->res->dom->find('thead tr th')->map('text')->to_array;
+  is_deeply $head, $data->[0], 'correct html table headers';
+  my $body = $t->tx->res->dom->find('tbody tr')->map(sub{ $_->find('td')->map('text')->to_array })->to_array;
+  is_deeply $body, [@$data[1..$#$data]], 'correct html table body';
 }
 
 done_testing;
