@@ -77,7 +77,7 @@ $t->get_ok('/table.txt')
 
 {
   local %INC = %INC;
-  local $INC[0] = sub{ \'die' }; # prevent load
+  local $INC[0] = sub{ \'0;' }; # prevent load
   $t->get_ok('/table.xls')
     ->status_is(406);
 }
@@ -95,7 +95,7 @@ SKIP: {
 
 {
   local %INC = %INC;
-  local $INC[0] = sub{ \'die' }; # prevent load
+  local $INC[0] = sub{ \'0;' }; # prevent load
   $t->get_ok('/table.xlsx')
     ->status_is(406);
 }
