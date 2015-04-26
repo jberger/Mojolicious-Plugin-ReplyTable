@@ -6,6 +6,12 @@ use Text::CSV;
 use Mojo::Collection 'c';
 use Mojo::Util 'squish';
 
+sub pin_inc (&) {
+  local %INC = %INC;
+  local @INC = (sub { \'0;' }, @INC);
+  shift->();
+}
+
 plugin 'ReplyTable';
 
 my $data = [
@@ -75,12 +81,10 @@ $t->get_ok('/table.txt')
 
 # xls
 
-{
-  local %INC = %INC;
-  local $INC[0] = sub{ \'0;' }; # prevent load
+pin_inc {
   $t->get_ok('/table.xls')
     ->status_is(406);
-}
+};
 
 SKIP: {
   skip 'test requires Spreadsheet::WriteExcel', 2
@@ -93,12 +97,10 @@ SKIP: {
 
 # xlsx
 
-{
-  local %INC = %INC;
-  local $INC[0] = sub{ \'0;' }; # prevent load
+pin_inc {
   $t->get_ok('/table.xlsx')
     ->status_is(406);
-}
+};
 
 SKIP: {
   skip 'test requires Excel::Writer::XLSX', 2
