@@ -17,10 +17,10 @@ sub _reply_table {
   my %respond = (
     json => { json => $data },
     html => { template => 'reply_table', table => $data },
-    csv  => sub { $_[0]->render(text => _to_csv($data)) },
+    csv  => sub { $_[0]->render(text => _to_csv($_[0], $data)) },
     txt  => sub { $_[0]->render(text => Mojo::Util::tablify($data)) },
-    xls  => sub { $_[0]->render(data => _to_xls($data)) },
-    xlsx => sub { $_[0]->render(data => _to_xlsx($data)) },
+    xls  => sub { $_[0]->render(data => _to_xls($_[0], $data)) },
+    xlsx => sub { $_[0]->render(data => _to_xlsx($_[0], $data)) },
     @_
   );
   if ($default) {
@@ -30,7 +30,7 @@ sub _reply_table {
 }
 
 sub _to_csv {
-  my ($data) = @_;
+  my ($c, $data) = @_;
   require Text::CSV;
   my $csv = Text::CSV->new({binary => 1});
   my $string = '';
@@ -42,8 +42,11 @@ sub _to_csv {
 }
 
 sub _to_xls {
-  my ($data) = @_;
-  require Spreadsheet::WriteExcel;
+  my ($c, $data) = @_;
+  unless (eval{ require Spreadsheet::WriteExcel; 1 }) {
+    $c->rendered(406);
+    return '';
+  }
   open my $xfh, '>', \my $fdata or die "Failed to open filehandle: $!";
   my $workbook  = Spreahsheet::WriteExcel->new( $xfh );
   my $worksheet = $workbook->add_worksheet();
@@ -53,8 +56,11 @@ sub _to_xls {
 };
 
 sub _to_xlsx {
-  my ($data) = @_;
-  require Excel::Writer::XLSX;
+  my ($c, $data) = @_;
+  unless (eval{ require Excel::Writer::XLSX; 1 }) {
+    $c->rendered(406);
+    return '';
+  }
   open my $xfh, '>', \my $fdata or die "Failed to open filehandle: $!";
   my $workbook  = Excel::Writer::XLSX->new( $xfh );
   my $worksheet = $workbook->add_worksheet();
