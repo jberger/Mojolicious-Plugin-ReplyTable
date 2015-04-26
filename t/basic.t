@@ -3,6 +3,8 @@ use Mojolicious::Lite;
 use Test::More;
 use Test::Mojo;
 use Text::CSV;
+use Mojo::Collection 'c';
+use Mojo::Util 'squish';
 
 plugin 'ReplyTable';
 
@@ -58,12 +60,9 @@ $t->get_ok('/table.txt')
   ->content_type_like(qr'text/plain');
 
 {
-  my $res = $t->tx->res->body;
-  my $pattern = '';
-  for my $line (@$data) {
-    $pattern .= '\s*' . join('\s+', map { quotemeta Mojo::Util::encode 'UTF-8', $_ } @$line) . '\s*\v\s*';
-  }
-  like $res, qr[$pattern]su, 'text table contains correct information';
+  my $res = squish $t->tx->res->text;
+  my $expect = c(@$data)->flatten->join(' ');
+  is $res, $expect, 'text table has correct information';
 }
 
 done_testing;
