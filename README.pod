@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head1 NAME
 
 Mojolicious::Plugin::ReplyTable - Easily render rectangular data in many formats using Mojolicious
@@ -67,7 +69,7 @@ The use of a more sofisticated external formatter, perhaps an ASCII art generato
 Binary Microsoft Excel format (for older editions of Excel), provided by optional module L<Spreadsheet::WriteExcel>.
 If that module is not installed, the client will receive an error status 406.
 
-=head3 xls
+=head3 xlsx
 
 XML Microsoft Excel format (for newer editions of Excel), provided by optional module L<Excel::Writer::XLSX>.
 If that module is not installed, the client will receive an error status 406.
@@ -119,11 +121,21 @@ L<http://github.com/jberger/Mojolicious-Plugin-ReplyTable>
 
 =head1 DEVELOPMENT SPONSORED BY
 
-Restore Health Corporation, L<http://restorhc.com>
+Restore Health Corporation, L<http://restorehc.com>
 
 =head1 AUTHOR
 
 Joel Berger, E<lt>joel.a.berger@gmail.comE<gt>
+
+=head1 CONTRIBUTORS
+
+=over
+
+Nils Diewald (Akron)
+
+Красимир Беров (kberov)
+
+=back
 
 =head1 COPYRIGHT AND LICENSE
 

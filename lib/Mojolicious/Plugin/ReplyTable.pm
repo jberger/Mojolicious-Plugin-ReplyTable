@@ -113,6 +113,8 @@ __DATA__
 
 __END__
 
+=encoding utf8
+
 =head1 NAME
 
 Mojolicious::Plugin::ReplyTable - Easily render rectangular data in many formats using Mojolicious
@@ -239,6 +241,16 @@ Restore Health Corporation, L<http://restorehc.com>
 =head1 AUTHOR
 
 Joel Berger, E<lt>joel.a.berger@gmail.comE<gt>
+
+=head1 CONTRIBUTORS
+
+=over
+
+Nils Diewald (Akron)
+
+Красимир Беров (kberov)
+
+=back
 
 =head1 COPYRIGHT AND LICENSE
 
