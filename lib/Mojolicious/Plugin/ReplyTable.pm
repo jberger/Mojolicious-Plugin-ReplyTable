@@ -205,15 +205,16 @@ If any of it tickles your fancy, pull-requests are always welcome.
 
 =item *
 
-Better tests for generated Excel documents
+Better tests for generated Excel documents.
 
 =item *
 
-Exposing the formatters so that they can be used directly
+Exposing the formatters so that they can be used directly.
 
 =item *
 
-Add additional formats, like OpenOffice/LibreOffice
+Add additional formats, like OpenOffice/LibreOffice.
+If needed these can be appended via additional handlers to the helper.
 
 =back
 
