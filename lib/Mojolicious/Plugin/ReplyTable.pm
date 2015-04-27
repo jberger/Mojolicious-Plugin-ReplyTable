@@ -182,7 +182,7 @@ The use of a more sofisticated external formatter, perhaps an ASCII art generato
 Binary Microsoft Excel format (for older editions of Excel), provided by optional module L<Spreadsheet::WriteExcel>.
 If that module is not installed, the client will receive an error status 406.
 
-=head3 xls
+=head3 xlsx
 
 XML Microsoft Excel format (for newer editions of Excel), provided by optional module L<Excel::Writer::XLSX>.
 If that module is not installed, the client will receive an error status 406.
