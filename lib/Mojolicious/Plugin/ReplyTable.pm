@@ -52,7 +52,7 @@ sub _to_xls {
     return '';
   }
   open my $xfh, '>', \my $fdata or die "Failed to open filehandle: $!";
-  my $workbook  = Spreahsheet::WriteExcel->new( $xfh );
+  my $workbook  = Spreadsheet::WriteExcel->new( $xfh );
   my $worksheet = $workbook->add_worksheet();
   $worksheet->write_col('A1', $data);
   $workbook->close();
