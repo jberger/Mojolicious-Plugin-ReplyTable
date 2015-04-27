@@ -21,9 +21,28 @@ my $data = [
 ];
 
 any '/table' => sub { shift->reply->table($data) };
+any '/table_json' => sub { shift->reply->table(json => $data) };
 any '/table_header' => sub { shift->stash('reply_table.header_row' => 1)->reply->table($data) };
 
 my $t = Test::Mojo->new;
+
+# defaults
+
+$t->get_ok('/table')
+  ->status_is(200)
+  ->content_type_like(qr'text/html');
+
+$t->get_ok('/table.json')
+  ->status_is(200)
+  ->content_type_like(qr'application/json');
+
+$t->get_ok('/table_json')
+  ->status_is(200)
+  ->content_type_like(qr'application/json');
+
+$t->get_ok('/table_json.html')
+  ->status_is(200)
+  ->content_type_like(qr'text/html');
 
 # json
 
