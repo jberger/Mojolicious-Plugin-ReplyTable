@@ -132,6 +132,7 @@ Mojolicious::Plugin::ReplyTable - Easily render rectangular data in many formats
 =head1 DESCRIPTION
 
 L<Mojolicious::Plugin::ReplyTable> adds the C<< reply->table >> helper which can render a table of data in one of several user-selected formats.
+The format is selected by the client via the usual Mojolicious L<Content Negotiation|Mojolicious::Guides::Rendering/"Content negotiation"> mechanisms.
 
 Loading the plugin also sets up several MIME types (using L<Mojolicious::Types>, see L<Mojolicious/types>), and appends the module to the list of rendering classes (See L<Mojolicious/renderer>).
 
