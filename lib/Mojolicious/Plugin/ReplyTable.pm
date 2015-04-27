@@ -1,6 +1,10 @@
 package Mojolicious::Plugin::ReplyTable;
 
 use Mojo::Base 'Mojolicious::Plugin';
+
+our $VERSION = '0.01';
+$VERSION = eval $VERSION;
+
 use Mojo::Util;
 
 sub register {
@@ -206,6 +210,10 @@ Better tests for generated Excel documents
 =item *
 
 Exposing the formatters so that they can be used directly
+
+=item *
+
+Add additional formats, like OpenOffice/LibreOffice
 
 =back
 

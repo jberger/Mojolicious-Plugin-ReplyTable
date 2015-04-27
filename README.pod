@@ -96,6 +96,10 @@ Better tests for generated Excel documents
 
 Exposing the formatters so that they can be used directly
 
+=item *
+
+Add additional formats, like OpenOffice/LibreOffice
+
 =back
 
 =head1 SEE ALSO
