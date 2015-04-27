@@ -1,5 +1,8 @@
 Revision history for Perl module Mojolicious::Plugin::ReplyTable
 
+0.02 2015-04-27
+  - POD fixes (Akron, kberov)
+
 0.01 2015-04-26
   - Initial release
 
