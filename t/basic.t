@@ -2,15 +2,11 @@ use Mojolicious::Lite;
 
 use Test::More;
 use Test::Mojo;
+use Test::Without::Module;
+
 use Text::CSV;
 use Mojo::Collection 'c';
 use Mojo::Util 'squish';
-
-sub pin_inc (&) {
-  local %INC = %INC;
-  local @INC = (sub { \'0;' }, @INC);
-  shift->();
-}
 
 plugin 'ReplyTable';
 
@@ -108,10 +104,12 @@ $t->get_ok('/table.txt')
 
 # xls
 
-pin_inc {
+{
+  Test::Without::Module->import('Spreadsheet::WriteExcel');
   $t->get_ok('/table.xls')
     ->status_is(406);
-};
+  Test::Without::Module->unimport('Spreadsheet::WriteExcel');
+}
 
 SKIP: {
   skip 'test requires Spreadsheet::WriteExcel', 2
@@ -124,10 +122,12 @@ SKIP: {
 
 # xlsx
 
-pin_inc {
+{
+  Test::Without::Module->import('Excel::Writer::XLSX');
   $t->get_ok('/table.xlsx')
     ->status_is(406);
-};
+  Test::Without::Module->unimport('Excel::Writer::XLSX');
+}
 
 SKIP: {
   skip 'test requires Excel::Writer::XLSX', 2

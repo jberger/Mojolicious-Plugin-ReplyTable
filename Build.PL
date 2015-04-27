@@ -9,10 +9,13 @@ my $build = Module::Build->new(
   module_name        => 'Mojolicious::Plugin::ReplyTable',
   dist_author        => 'Joel Berger <joel.a.berger@gmail.com>',
   license            => 'perl',
-  configure_requires => { 'Module::Build' => 0.38 },
+  configure_requires => { 'Module::Build' => '0.4004'},
   requires => {
     'Mojolicious'  => '5.00',
     'Text::CSV' => 0,
+  },
+  test_requires => {
+    'Test::Without::Module' => 0,
   },
   recommends => {
     'Spreadsheet::WriteExcel' => 0,
