@@ -38,7 +38,7 @@ Renders an arrayref of arrayrefs (the inner arrayref being a row) in one of seve
 An optional leading argument is used as the default format when one is not otherwise requested.
 Optional trailing key-value pairs are merged into the arguments to L<Mojolicious::Controller/respond_to>.
 
-Any additional options, particularly those governing formatting details is via stash keys prefixed by C<reply_table.>.
+Any additional options, particularly those governing formatting details, are via stash keys prefixed by C<reply_table.>.
 Note that the prefix C<reply_table.private.> is reserved for internal use.
 
 The formats currently include:
