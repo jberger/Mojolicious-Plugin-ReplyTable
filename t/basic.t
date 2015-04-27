@@ -21,8 +21,9 @@ my $data = [
 ];
 
 any '/table' => sub { shift->reply->table($data) };
-any '/table_json' => sub { shift->reply->table(json => $data) };
-any '/table_header' => sub { shift->stash('reply_table.header_row' => 1)->reply->table($data) };
+any '/json' => sub { shift->reply->table(json => $data) };
+any '/header' => sub { shift->stash('reply_table.header_row' => 1)->reply->table($data) };
+any '/override' => sub { shift->reply->table(txt => $data, txt => { text => 'hello world' }) };
 
 my $t = Test::Mojo->new;
 
@@ -36,13 +37,20 @@ $t->get_ok('/table.json')
   ->status_is(200)
   ->content_type_like(qr'application/json');
 
-$t->get_ok('/table_json')
+$t->get_ok('/json')
   ->status_is(200)
   ->content_type_like(qr'application/json');
 
-$t->get_ok('/table_json.html')
+$t->get_ok('/json.html')
   ->status_is(200)
   ->content_type_like(qr'text/html');
+
+# overrides
+
+$t->get_ok('/override')
+  ->status_is(200)
+  ->content_type_like(qr'text/plain')
+  ->content_is('hello world');
 
 # json
 
@@ -75,7 +83,7 @@ $t->get_ok('/table.html')
   is_deeply $res, $data, 'data returned as html';
 }
 
-$t->get_ok('/table_header.html')
+$t->get_ok('/header.html')
   ->status_is(200)
   ->content_type_like(qr'text/html');
 
