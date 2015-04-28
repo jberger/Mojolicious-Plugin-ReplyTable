@@ -11,7 +11,7 @@ my $build = Module::Build->new(
   license            => 'perl',
   configure_requires => { 'Module::Build' => '0.4004'},
   requires => {
-    'Mojolicious'  => '5.00',
+    'Mojolicious'  => '5.60', # Mojo::Collection->to_array
     'Text::CSV' => 0,
   },
   test_requires => {

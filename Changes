@@ -1,5 +1,8 @@
 Revision history for Perl module Mojolicious::Plugin::ReplyTable
 
+0.04 2015-04-28
+  - Mojolicious dependency set to 5.60 for needed features
+
 0.03 2015-04-27
   - Fix tests on older Perl versions
 
