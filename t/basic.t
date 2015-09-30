@@ -92,12 +92,29 @@ $t->get_ok('/header.html')
 
 # text
 
-$t->get_ok('/table.txt')
-  ->status_is(200)
-  ->content_type_like(qr'text/plain');
-
 {
+  Test::Without::Module->import('Text::Table::Tiny');
+  $t->get_ok('/table.txt')
+    ->status_is(200)
+    ->content_type_like(qr'text/plain');
+
   my $res = squish $t->tx->res->text;
+  my $expect = c(@$data)->flatten->join(' ');
+  is $res, $expect, 'text table has correct information';
+  Test::Without::Module->unimport('Text::Table::Tiny');
+}
+
+SKIP: {
+  skip 'test requires Text::Table::Tiny', 5
+    unless eval { require Text::Table::Tiny; 1 };
+
+  $t->get_ok('/table.txt')
+    ->status_is(200)
+    ->content_type_like(qr'text/plain');
+
+  my $res = $t->tx->res->text;
+  ok +($res =~ s/[+|-]//g), 'content had some styling';
+  $res = squish $res;
   my $expect = c(@$data)->flatten->join(' ');
   is $res, $expect, 'text table has correct information';
 }
@@ -112,7 +129,7 @@ $t->get_ok('/table.txt')
 }
 
 SKIP: {
-  skip 'test requires Spreadsheet::WriteExcel', 2
+  skip 'test requires Spreadsheet::WriteExcel', 4
     unless eval { require Spreadsheet::WriteExcel; 1 };
   $t->get_ok('/table.xls')
     ->status_is(200)
@@ -130,7 +147,7 @@ SKIP: {
 }
 
 SKIP: {
-  skip 'test requires Excel::Writer::XLSX', 2
+  skip 'test requires Excel::Writer::XLSX', 4
     unless eval { require Excel::Writer::XLSX; 1 };
   $t->get_ok('/table.xlsx')
     ->status_is(200)

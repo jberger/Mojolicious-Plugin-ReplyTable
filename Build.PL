@@ -12,14 +12,15 @@ my $build = Module::Build->new(
   configure_requires => { 'Module::Build' => '0.4004'},
   requires => {
     'Mojolicious'  => '5.60', # Mojo::Collection->to_array
-    'Text::CSV' => 0,
+    'Text::CSV'    => 0,
   },
   test_requires => {
     'Test::Without::Module' => 0,
   },
   recommends => {
     'Spreadsheet::WriteExcel' => 0,
-    'Excel::Writer::XLSX' => 0,
+    'Excel::Writer::XLSX'     => 0,
+    'Text::Table::Tiny'       => 0,
   },
   meta_merge => {
     resources => {

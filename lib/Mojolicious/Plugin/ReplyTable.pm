@@ -22,7 +22,7 @@ sub _reply_table {
     json => { json => $data },
     html => { template => 'reply_table', 'reply_table.table' => $data },
     csv  => sub { $_[0]->render(text => _to_csv($_[0], $data)) },
-    txt  => sub { $_[0]->render(text => Mojo::Util::tablify($data)) },
+    txt  => sub { $_[0]->render(text => _to_txt($_[0], $data)) },
     xls  => sub { $_[0]->render(data => _to_xls($_[0], $data)) },
     xlsx => sub { $_[0]->render(data => _to_xlsx($_[0], $data)) },
     @_
@@ -43,6 +43,19 @@ sub _to_csv {
     $string .= $csv->string . "\n";
   }
   return $string;
+}
+
+sub _to_txt {
+  my ($c, $data) = @_;
+  if (eval{ require Text::Table::Tiny; 1 }) {
+    return Text::Table::Tiny::table(
+      rows => $data,
+      header_row    => $c->stash('reply_table.header_row'),
+      separate_rows => $c->stash('reply_table.separate_rows'),
+    );
+  } else {
+    return Mojo::Util::tablify($data);
+  }
 }
 
 sub _to_xls {
@@ -175,9 +188,12 @@ Implemented via the standard L<Mojo::JSON> handling.
 
 =head3 txt
 
-A textual representation of the table is generated via L<Mojo::Util::tablify>.
+A textual representation of the table.
 This format is intended for human consumption and the specific formatting should not be relied upon.
-The use of a more sofisticated external formatter, perhaps an ASCII art generator, is being considered.
+
+If L<Text::Table::Tiny> is available, it will be used to format the data.
+It can be controlled via the stash keys C<reply_table.header_row> and C<reply_table.separate_rows> as noted in that module's documentation.
+Otherwise it is generated via L<Mojo::Util::tablify>.
 
 =head3 xls
 
