@@ -1,6 +1,6 @@
 Revision history for Perl module Mojolicious::Plugin::ReplyTable
 
-0.05 
+0.05 2015-10-02  
   - Added support for Text::Table::Tiny
 
 0.04 2015-04-28
