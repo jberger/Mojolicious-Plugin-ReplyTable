@@ -47,7 +47,7 @@ sub _to_csv {
 
 sub _to_txt {
   my ($c, $data) = @_;
-  if (eval{ require Text::Table::Tiny; 1 }) {
+  if (!$c->stash('reply_table.tablify') && eval{ require Text::Table::Tiny; 1 }) {
     return Text::Table::Tiny::table(
       rows => $data,
       header_row    => $c->stash('reply_table.header_row'),
@@ -191,7 +191,7 @@ Implemented via the standard L<Mojo::JSON> handling.
 A textual representation of the table.
 This format is intended for human consumption and the specific formatting should not be relied upon.
 
-If L<Text::Table::Tiny> is available, it will be used to format the data.
+If L<Text::Table::Tiny> is available, it will be used to format the data (can be overridden with C<reply_table.tablify>).
 It can be controlled via the stash keys C<reply_table.header_row> and C<reply_table.separate_rows> as noted in that module's documentation.
 Otherwise it is generated via L<Mojo::Util::tablify>.
 

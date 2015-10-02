@@ -16,7 +16,11 @@ my $data = [
   [qw/r2c1  r2c2☃ r2c3 /],
 ];
 
-any '/table' => sub { shift->reply->table($data) };
+any '/table' => sub {
+  my $c = shift;
+  $c->stash('reply_table.tablify' => 1) if $c->param('tablify');
+  $c->reply->table($data);
+};
 any '/json' => sub { shift->reply->table(json => $data) };
 any '/header' => sub { shift->stash('reply_table.header_row' => 1)->reply->table($data) };
 any '/override' => sub { shift->reply->table(txt => $data, txt => { text => 'hello world' }) };
@@ -114,6 +118,21 @@ SKIP: {
 
   my $res = $t->tx->res->text;
   ok +($res =~ s/[+|-]//g), 'content had some styling';
+  $res = squish $res;
+  my $expect = c(@$data)->flatten->join(' ');
+  is $res, $expect, 'text table has correct information';
+}
+
+SKIP: {
+  skip 'test requires Text::Table::Tiny', 5
+    unless eval { require Text::Table::Tiny; 1 };
+
+  $t->get_ok('/table.txt?tablify=1')
+    ->status_is(200)
+    ->content_type_like(qr'text/plain');
+
+  my $res = $t->tx->res->text;
+  ok !($res =~ s/[+|-]//g), 'content did not have styling when tablify is requested';
   $res = squish $res;
   my $expect = c(@$data)->flatten->join(' ');
   is $res, $expect, 'text table has correct information';
