@@ -99,33 +99,6 @@ sub setup_types {
 
 1;
 
-__DATA__
-
-@@ reply_table.html.ep
-% my $skip = 0;
-% my $table = stash 'reply_table.table';
-<table>
-  % if ($skip = !!stash 'reply_table.header_row') {
-    <thead><tr>
-      % for my $header (@{$table->[0] || []}) {
-        <th><%= $header %></th>
-      % }
-    </tr></thead>
-  % }
-  <tbody>
-    % for my $row (@$table) {
-      % if ($skip) { $skip = 0; next }
-      <tr>
-        % for my $value (@$row) {
-          <td><%= $value %></td>
-        % }
-      </tr>
-    % }
-  </tbody>
-</table>
-
-__END__
-
 =encoding utf8
 
 =head1 NAME
@@ -273,4 +246,31 @@ Nils Diewald (Akron)
 Copyright (C) 2015 by Joel Berger
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
+
+=cut
+
+__DATA__
+
+@@ reply_table.html.ep
+% my $skip = 0;
+% my $table = stash 'reply_table.table';
+<table>
+  % if ($skip = !!stash 'reply_table.header_row') {
+    <thead><tr>
+      % for my $header (@{$table->[0] || []}) {
+        <th><%= $header %></th>
+      % }
+    </tr></thead>
+  % }
+  <tbody>
+    % for my $row (@$table) {
+      % if ($skip) { $skip = 0; next }
+      <tr>
+        % for my $value (@$row) {
+          <td><%= $value %></td>
+        % }
+      </tr>
+    % }
+  </tbody>
+</table>
 

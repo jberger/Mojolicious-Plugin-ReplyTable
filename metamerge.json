@@ -1,0 +1,17 @@
+{
+   "name": "Mojolicious-Plugin-ReplyTable",
+   "license" : [ "perl_5" ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "resources" : {
+      "repository" : {
+         "url" : "http://github.com/jberger/Mojolicious-Plugin-ReplyTable"
+      },
+      "bugtracker" : {
+         "web" : "http://github.com/jberger/Mojolicious-Plugin-ReplyTable/issues"
+      },
+      "license" : [ "http://dev.perl.org/licenses/" ]
+   }
+}

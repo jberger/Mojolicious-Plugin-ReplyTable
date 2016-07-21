@@ -78,3 +78,6 @@
 
 # Avoid README.pod intended for github
 \bREADME\.pod\b
+
+# Avoid App::ModuleBuildTiny files
+\bmetamerge.*
