@@ -6,7 +6,7 @@ use Test::Without::Module;
 
 use Text::CSV;
 use Mojo::Collection 'c';
-use Mojo::Util 'squish';
+use Mojo::Util 'trim';
 
 plugin 'ReplyTable';
 
@@ -102,7 +102,8 @@ $t->get_ok('/header.html')
     ->status_is(200)
     ->content_type_like(qr'text/plain');
 
-  my $res = squish $t->tx->res->text;
+  my $res = trim $t->tx->res->text;
+  $res =~ s/\s++/ /g;
   my $expect = c(@$data)->flatten->join(' ');
   is $res, $expect, 'text table has correct information';
   Test::Without::Module->unimport('Text::Table::Tiny');
@@ -118,7 +119,8 @@ SKIP: {
 
   my $res = $t->tx->res->text;
   ok +($res =~ s/[+|-]//g), 'content had some styling';
-  $res = squish $res;
+  $res = trim $res;
+  $res =~ s/\s++/ /g;
   my $expect = c(@$data)->flatten->join(' ');
   is $res, $expect, 'text table has correct information';
 }
