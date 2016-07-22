@@ -135,7 +135,8 @@ SKIP: {
 
   my $res = $t->tx->res->text;
   ok !($res =~ s/[+|-]//g), 'content did not have styling when tablify is requested';
-  $res = squish $res;
+  $res = trim $res;
+  $res =~ s/\s++/ /g;
   my $expect = c(@$data)->flatten->join(' ');
   is $res, $expect, 'text table has correct information';
 }
