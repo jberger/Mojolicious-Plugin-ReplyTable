@@ -1,5 +1,5 @@
 use Mojolicious::Lite;
-
+use lib qw (../lib);
 use Test::More;
 use Test::Mojo;
 use Test::Without::Module;
@@ -19,6 +19,9 @@ my $data = [
 any '/table' => sub {
   my $c = shift;
   $c->stash('reply_table.tablify' => 1) if $c->param('tablify');
+  $c->stash('reply_table.csv_options' => { sep_char => "|" }) if $c->param('format_as_psv');
+  	
+
   $c->reply->table($data);
 };
 any '/json' => sub { shift->reply->table(json => $data) };
@@ -71,6 +74,20 @@ $t->get_ok('/table.csv')
   open my $fh, '<', \$res;
   is_deeply $csv->getline_all($fh), $data, 'data returned as csv';
 }
+
+# csv with options
+
+$t->get_ok('/table.csv?format_as_psv=1')
+  ->status_is(200)
+  ->content_type_like(qr'text/csv');
+
+{
+  my $csv = Text::CSV->new({binary => 1, sep_char => "|" });
+  my $res = $t->tx->res->body;
+  open my $fh, '<', \$res;
+  is_deeply $csv->getline_all($fh), $data, 'data returned as psv';
+}
+
 
 # html
 
