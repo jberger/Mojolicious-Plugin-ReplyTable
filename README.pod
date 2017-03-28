@@ -46,13 +46,7 @@ The formats currently include:
 =head3 csv
 
 Implemented via L<Text::CSV> using the default values with C<binary> enabled.
-To override these defaults set the stash key C<reply_table.csv_options> to a hashref containing attributes to pass to Text::CSV.  
-For example, to create a PSV (pipe delimited) file: 
-
-	$c->stash('reply_table.csv_options' => { sep_char => "|" });
-	
-See http://search.cpan.org/~ishigaki/Text-CSV/lib/Text/CSV.pm#new_(\%attr) for available options
-
+The ability to modify the formatter is planned and will likely utilize stash keys.
 
 =head3 html
 
@@ -66,9 +60,12 @@ Implemented via the standard L<Mojo::JSON> handling.
 
 =head3 txt
 
-A textual representation of the table is generated via L<Mojo::Util::tablify>.
+A textual representation of the table.
 This format is intended for human consumption and the specific formatting should not be relied upon.
-The use of a more sofisticated external formatter, perhaps an ASCII art generator, is being considered.
+
+If L<Text::Table::Tiny> is available, it will be used to format the data (can be overridden with C<reply_table.tablify>).
+It can be controlled via the stash keys C<reply_table.header_row> and C<reply_table.separate_rows> as noted in that module's documentation.
+Otherwise it is generated via L<Mojo::Util::tablify>.
 
 =head3 xls
 
@@ -125,9 +122,9 @@ If needed these can be appended via additional handlers to the helper.
 
 L<http://github.com/jberger/Mojolicious-Plugin-ReplyTable>
 
-=head1 DEVELOPMENT SPONSORED BY
+=head1 SPECIAL THANKS
 
-Restore Health Corporation, L<http://restorehc.com>
+Pharmetika Software, L<http://pharmetika.com>
 
 =head1 AUTHOR
 
@@ -141,11 +138,13 @@ Nils Diewald (Akron)
 
 Красимир Беров (kberov)
 
+Ryan Perry
+
 =back
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2015 by Joel Berger
+Copyright (C) 2015 by L</AUTHOR> and L</CONTRIBUTORS>.
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 

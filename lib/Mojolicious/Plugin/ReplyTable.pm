@@ -2,7 +2,7 @@ package Mojolicious::Plugin::ReplyTable;
 
 use Mojo::Base 'Mojolicious::Plugin';
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 $VERSION = eval $VERSION;
 
 use Mojo::Util;
@@ -225,9 +225,9 @@ If needed these can be appended via additional handlers to the helper.
 
 L<http://github.com/jberger/Mojolicious-Plugin-ReplyTable>
 
-=head1 DEVELOPMENT SPONSORED BY
+=head1 SPECIAL THANKS
 
-Restore Health Corporation, L<http://restorehc.com>
+Pharmetika Software, L<http://pharmetika.com>
 
 =head1 AUTHOR
 
@@ -241,11 +241,13 @@ Nils Diewald (Akron)
 
 Красимир Беров (kberov)
 
+Ryan Perry
+
 =back
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2015 by Joel Berger
+Copyright (C) 2015 by L</AUTHOR> and L</CONTRIBUTORS>.
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
