@@ -46,7 +46,13 @@ The formats currently include:
 =head3 csv
 
 Implemented via L<Text::CSV> using the default values with C<binary> enabled.
-The ability to modify the formatter is planned and will likely utilize stash keys.
+Setting the stash key C<reply_table.csv_options> to a hashref containing attributes to pass to Text::CSV.  
+For example, to create a PSV (pipe delimited) file: 
+
+	$c->stash('reply_table.csv_options' => { sep_char => ";" });
+	
+See http://search.cpan.org/~ishigaki/Text-CSV/lib/Text/CSV.pm#new_(\%attr) for available options
+
 
 =head3 html
 
