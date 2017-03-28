@@ -36,7 +36,9 @@ sub _reply_table {
 sub _to_csv {
   my ($c, $data) = @_;
   require Text::CSV;
-  my $csv = Text::CSV->new({binary => 1});
+  my $csv_options = $c->stash('reply_table.csv_options') || {};
+  $csv_options->{binary} = 1 unless exists $csv_options->{binary};
+  my $csv = Text::CSV->new($csv_options);
   my $string = '';
   for my $row (@$data) {
     $csv->combine(@$row) || die $csv->error_diag;
