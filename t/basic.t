@@ -1,5 +1,5 @@
 use Mojolicious::Lite;
-use lib qw (../lib);
+
 use Test::More;
 use Test::Mojo;
 use Test::Without::Module;
