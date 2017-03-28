@@ -2,7 +2,7 @@ package Mojolicious::Plugin::ReplyTable;
 
 use Mojo::Base 'Mojolicious::Plugin';
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 $VERSION = eval $VERSION;
 
 use Mojo::Util;
@@ -148,8 +148,14 @@ The formats currently include:
 
 =head3 csv
 
+
 Implemented via L<Text::CSV> using the default values with C<binary> enabled.
-The ability to modify the formatter is planned and will likely utilize stash keys.
+To override these defaults set the stash key C<reply_table.csv_options> to a hashref containing attributes to pass to Text::CSV.
+For example, to create a PSV (pipe delimited) file:
+
+  $c->stash('reply_table.csv_options' => { sep_char => "|" });
+
+See L<Text::CSV/new> for available options.
 
 =head3 html
 
