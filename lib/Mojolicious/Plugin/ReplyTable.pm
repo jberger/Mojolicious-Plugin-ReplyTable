@@ -38,7 +38,8 @@ sub _to_csv {
   require Text::CSV;
   my $csv_options = $c->stash('reply_table.csv_options') || {};
   $csv_options->{binary} = 1 unless exists $csv_options->{binary};
-  my $csv = Text::CSV->new($csv_options);
+  my $csv = Text::CSV->new($csv_options)
+    or die Text::CSV->error_diag();
   my $string = '';
   for my $row (@$data) {
     $csv->combine(@$row) || die $csv->error_diag;
