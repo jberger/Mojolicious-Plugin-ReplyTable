@@ -2,7 +2,7 @@ package Mojolicious::Plugin::ReplyTable;
 
 use Mojo::Base 'Mojolicious::Plugin';
 
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 $VERSION = eval $VERSION;
 
 use Mojo::Util;
@@ -249,6 +249,8 @@ Nils Diewald (Akron)
 Красимир Беров (kberov)
 
 Ryan Perry
+
+Ilya Chesnokov (ichesnokov)
 
 =back
 
