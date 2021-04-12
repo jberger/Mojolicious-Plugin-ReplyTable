@@ -118,7 +118,7 @@ If needed these can be appended via additional handlers to the helper.
 
 =back
 
-=head1 A Note On Format Detection
+=head1 A NOTE ON FORMAT DETECTION
 
 As of L<Mojolicious> version 9.11, format detection is disabled by default.
 To enable it you can pass an array reference of C<< [format=>\@formats] >> to the route, where C<@formats> is the supported file extensions.
